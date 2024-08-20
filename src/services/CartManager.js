@@ -27,7 +27,7 @@ export default class CartManager {
 
     getCartById(id) {
         const cart= this.carts.find(cart => cart.id === id)
-        return cart
+        return cart.products
     }
 
 
