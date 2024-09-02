@@ -6,7 +6,6 @@ const productosFilePath = path.resolve('data', 'productos.json')
 export default class ProductManager {
     constructor() {
         this.products = []
-        this.init()
     }
 
     async init() {
@@ -24,18 +23,49 @@ export default class ProductManager {
         fs.writeFile(productosFilePath, JSON.stringify(this.products, null, 2));
     }
 
-    getAllProducts(limit) {
+   async getAllProducts(limit) {
+        await this.init();
+
         if (limit) {
             return this.products.slice(0, limit)
         }
         return this.products
     }
 
-    getProductById(id) {
+    verificationProductCode(code){
+        const productIndex = this.products.findIndex(product => product.code === code);
+        if (productIndex === -1) {
+            return null
+        }else{
+            return this.products[productIndex].id
+        }
+        
+
+    }
+
+   async productVerificationById(id){
+       await this.init();
+       console.log(this.products.length)
+        const productIndex = this.products.findIndex(product => product.id === id);
+        if (productIndex === -1) {
+            return true
+        }else{
+            return null
+        }
+    }
+
+
+    async getProductById(id) {
+        await this.init();
+
         return this.products.find(product => product.id === id)
     }
 
-    addProduct(product) {
+   async addProduct(product) {
+        await this.init();
+
+        if (this.verificationProductCode(product.code)) return null;
+
         const newProduct = {
             id: this.products.length ? this.products[this.products.length - 1].id + 1 : 1,
             ...product,
@@ -46,9 +76,15 @@ export default class ProductManager {
         return newProduct;
     }
 
-    updateProduct(id, updatedFields) {
+    async updateProduct(id, updatedFields) {
+        await this.init();
+
         const productIndex = this.products.findIndex(product => product.id === id)
         if (productIndex === -1) return null;
+
+        const idExistingCode= updatedFields.code? this.verificationProductCode(updatedFields.code):null
+        if (idExistingCode != id && idExistingCode) return 1;
+        
         
         const updateProduct = {
             ...this.products[productIndex],
@@ -60,7 +96,9 @@ export default class ProductManager {
         return updateProduct;
     }
 
-    deleteProduct(id) {
+    async deleteProduct(id) {
+        await this.init();
+
         const productIndex = this.products.findIndex(product => product.id === id)
         if (productIndex === -1) return null;
 

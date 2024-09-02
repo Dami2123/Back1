@@ -48,6 +48,9 @@ router.post('/', async (req, res) => {
         }
 
         const newProduct = await productManager.addProduct({ title, description, code, price, stock, category, thumbnails })
+        if (!newProduct) {
+            return res.status(400).json({ error: `Ya existe un producto con code: ${code}` });
+        }
         res.status(201).json(newProduct)
     } catch (error) {
         console.log(error);
@@ -58,20 +61,21 @@ router.post('/', async (req, res) => {
 router.put('/:pid', async (req, res) => {
     try {
         const productId = parseInt(req.params.pid);
-
-        if (Number.isInteger(productId) && productId > 0) {
-            const updateProduct = await productManager.updateProduct(productId, req.body);
-
-            if (updateProduct) {
-                res.json(updateProduct)
-            } else {
-                res.status(404).json({ error: 'Producto no encontrado' });
-            }
-
-        } else {
-            res.status(400).json({ error: 'El id del producto debe ser numérico y mayor que 0' });
-        }
-
+        
+        if (!Number.isInteger(productId) || !(productId > 0) ) { 
+            return res.status(400).json({ error: 'El id del producto debe ser numérico y mayor que 0' });
+        } 
+    
+        const updateProduct = await productManager.updateProduct(productId, req.body);
+        if (!updateProduct) {
+           return res.status(404).json({ error: 'Producto no encontrado' });
+        } 
+     
+        if (updateProduct===1) {
+            return res.status(400).json({ error: `El código ingresado ya existe para un producto distinto al del id ingresado`  });
+         } 
+         res.status(201).json(updateProduct)
+       
 
     } catch (error) {
         console.log(error);
@@ -85,7 +89,6 @@ router.delete('/:pid', async (req, res) => {
 
         if (Number.isInteger(productId) && productId > 0) {
             const deletedProduct = await productManager.deleteProduct(productId)
-            
             if (deletedProduct) {
                 res.json(deletedProduct)
             } else {
@@ -95,7 +98,6 @@ router.delete('/:pid', async (req, res) => {
         } else {
             res.status(400).json({ error: 'El id del producto debe ser numérico y mayor que 0' });
         }
-
 
     } catch (error) {
         console.log(error);

@@ -1,9 +1,9 @@
 import { Router } from 'express'
 import CartManager from '../services/CartManager.js';
 
+
 const router = Router();
 const cartManager = new CartManager();
-
 
 
 router.get('/:cid', async (req, res) => {
@@ -49,18 +49,20 @@ router.post('/:cid/product/:pid', async (req, res) => {
         const cartId = parseInt(req.params.cid)
         const productId = parseInt(req.params.pid);
 
-        if (Number.isInteger(cartId) && cartId > 0 && Number.isInteger(productId) && productId > 0) {
-            const cart = await cartManager.addProduct(cartId, productId)
-
-            if (cart) {
-                res.json(cart)
-            } else {
-                res.status(404).json({ error: 'No se encontró el carrito' });
-            }
-
-        } else {
+        if (!(Number.isInteger(cartId) && cartId > 0 )||!(Number.isInteger(productId) && productId > 0)) {
             res.status(400).json({ error: 'El id del carrito y el producto deben ser numéricos y mayor que 0' });
         }
+       
+        const cart = await cartManager.addProduct(cartId, productId);
+        if(cart===1){
+            return res.status(400).json({ error: 'El pruducto ingresado no existe' });
+        }
+        if (cart) {
+            return res.json(cart)
+         } 
+        res.status(404).json({ error: 'No se encontró el carrito' });
+        
+
     } catch (error) {
         console.log(error);
     }

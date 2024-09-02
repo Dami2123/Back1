@@ -1,12 +1,15 @@
 import fs from 'fs/promises'
 import path from 'path'
+import ProductManager from '../services/ProductManager.js';
 
 const cartsFilePath = path.resolve('data', 'carts.json')
+
+
 
 export default class CartManager {
     constructor() {
         this.carts = []
-        this.init()
+
     }
 
     async init() {
@@ -25,14 +28,16 @@ export default class CartManager {
     }
 
 
-    getCartById(id) {
+    async getCartById(id) {
+        await this.init()
         const cart= this.carts.find(cart => cart.id === id)
         return cart.products
     }
 
 
 
-    createCart() {
+   async createCart() {
+        await this.init()
         const newCart = {
             id: this.carts.length ? this.carts[this.carts.length - 1].id + 1 : 1,
             products: []
@@ -42,10 +47,14 @@ export default class CartManager {
         return newCart.id;
     }
 
-    addProduct(idCart, idProduct) {
+    async addProduct(idCart, idProduct) {
+        await this.init()
         const cartIndex = this.carts.findIndex(cart => cart.id === idCart)
         if (cartIndex === -1) return null;
-        
+
+        const productManager = new ProductManager();
+        const productVerification= await productManager.productVerificationById(idProduct);
+        if(productVerification) return 1;
 
         const existingProduct = this.carts[cartIndex].products.find((element) => element.product === idProduct);
 
