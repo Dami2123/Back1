@@ -64,7 +64,7 @@ export default class ProductManager {
    async addProduct(product) {
         await this.init();
 
-        if (this.verificationProductCode(product.code)) return null;
+        if (this.verificationProductCode(product.code)) return false;
 
         const newProduct = {
             id: this.products.length ? this.products[this.products.length - 1].id + 1 : 1,

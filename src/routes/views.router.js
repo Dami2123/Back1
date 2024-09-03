@@ -12,7 +12,7 @@ router.get("/home", async (req, res) => {
         const allProducts = await productManager.getAllProducts(limit)
         res.render("home", {
             title: "HOME",
-            style: "home.css",
+            style: "style.css",
             products: allProducts     
         })
 
@@ -22,6 +22,19 @@ router.get("/home", async (req, res) => {
     
 })
 
+router.get("/realtimeproducts", async (req, res) => {
+    
+    try {
+         res.render("realtimeproducts", {
+             title: "Realtime Products",
+             style: "style.css"
+         })
+ 
+     } catch (error) {
+         console.log(error);
+     }
+     
+ })
 
 
 

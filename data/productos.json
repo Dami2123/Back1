@@ -1,62 +1,7 @@
 [
   {
     "id": 1,
-    "title": "Polera",
-    "description": "Camiseta de manga corta hecha con material transpirable.",
-    "code": "CAMIuuuS01",
-    "price": 29.99,
-    "stock": 150,
-    "category": "Ropa Deportiva",
-    "thumbnails": [
-      "https://example.com/images/camiseta1.jpg",
-      "https://example.com/images/camiseta2.jpg"
-    ],
-    "status": true
-  },
-  {
-    "id": 2,
-    "title": "Zapatillas de Running",
-    "description": "Zapatillas ligeras y cómodas, perfectas para correr largas distancias.",
-    "code": "ZAPA01",
-    "price": 79.99,
-    "stock": 75,
-    "category": "Calzado Deportivo",
-    "thumbnails": [
-      "https://example.com/images/zapatillas1.jpg",
-      "https://example.com/images/zapatillas2.jpg"
-    ],
-    "status": true
-  },
-  {
-    "id": 3,
-    "title": "Camiseta Deportivaaaaaa",
-    "description": "Camiseta de manga corta hecha con material transpirable.",
-    "code": "CAMIS01",
-    "price": 29.99,
-    "stock": 150,
-    "category": "Ropa Deportiva",
-    "thumbnails": [
-      "https://example.com/images/camiseta1.jpg",
-      "https://example.com/images/camiseta2.jpg"
-    ],
-    "status": true
-  },
-  {
-    "id": 4,
-    "title": "Botella",
-    "description": "Botella de agua de acero inoxidable, capacidad de 750 ml.",
-    "code": "BOTELjdkkjwdkjLA01",
-    "price": 19.99,
-    "stock": 200,
-    "category": "Accesorios Deportivos",
-    "thumbnails": [
-      "https://example.com/images/botella1.jpg"
-    ],
-    "status": true
-  },
-  {
-    "id": 5,
-    "title": "Camiseta SUPER Deportiva",
+    "title": "Camiseta Deportiva",
     "description": "Camiseta de manga corta hecha con material transpirable.",
     "code": "CAMIS999901",
     "price": 29.99,

@@ -1,0 +1,48 @@
+<h1>Productos RealTime</h1>
+
+ <div class="formulario">
+            <div class="form">
+                <div class="formInputs ">
+
+                    <label for="title">Nombre</label>
+                    <input type="text" id="title" >
+
+                    <label for="code">Código</label>
+                    <input type="text" id="code" >
+
+                    <label for="price">Precio</label>
+                    <input type="number" id="price" >
+
+
+                    <label for="stock">Stock</label>
+                    <input type="number" id="stock" >
+
+                </div>
+
+                <div class="textinput">
+                    <div class="color">
+                        <label for="category">Categoría</label>
+                        <input type="text" id="category" >
+                        <label for="thumbnails">Imagen URL</label>
+                        <input type="url" id="thumbnails" >
+                        <label for="description">Descripción:</label>
+                        <textarea id="description"  cols="40" rows="12"></textarea>
+                    </div>
+                    <div> <button id="button">Agregar</button></div>
+
+                </div>
+
+
+
+            </div>
+    </div>
+
+     <h1>Lista de Productos</h1>
+<div class="productsContainer" id="productsContainer">
+
+</div>
+
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/realtimeproducts.js"></script>

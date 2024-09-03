@@ -8,7 +8,6 @@ const productManager = new ProductManager();
 router.get('/', async (req, res) => {
 
     try {
-
         const limit = req.query.limit ? parseInt(req.query.limit) : undefined;
         const products = await productManager.getAllProducts(limit)
         res.json(products)
@@ -24,7 +23,6 @@ router.get('/:pid', async (req, res) => {
 
         if (Number.isInteger(productId) && productId > 0) {
             const product = await productManager.getProductById(productId)
-
             if (product) {
                 res.json(product)
             } else {
