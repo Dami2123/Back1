@@ -1,11 +1,31 @@
- <h1>Lista de Productos</h1>
+<h1>Lista de Productos</h1>
+
 <div class="productsContainer">
-{{#each products}}
-    <div class="cardProduct">
+
+    {{#each response.payload}}
+    <a class="cardProduct" href="/product/{{this._id}}">
+        <img class="imgCatalogo" class="redes" src={{this.thumbnail}}>
         <p class="title"> {{this.title}}</p>
         <p class="price">$ {{this.price}}</p>
-        <p>Descripción: {{this.description}}</p>
-    </div>
- {{/each}}
+
+    </a>
+    {{/each}}
+
+</div>
+<br />
+
+<div class="changePage">
+    {{#if response.hasPrevPage}}
+    <a class="button" href={{response.prevLink}}>
+        < Anterior </a>
+    {{/if}}
+
+    {{response.page}}
+    
+
+    {{#if response.hasNextPage}}
+            <a class="button"  href={{response.nextLink}}>
+                Siguiente > </a>
+    {{/if}}
 
 </div>

@@ -6,6 +6,7 @@ import productsRouter from './routes/products.router.js'
 import cartsRouter from './routes/carts.router.js'
 import { Server } from 'socket.io'
 import ProductManager from './services/ProductManager.js'
+import mongoose from 'mongoose';
 
 const app = express();
 const PORT = 8080;
@@ -30,6 +31,18 @@ const httpServer = app.listen(PORT, () => {
     console.log("Servidor escuchando por el puerto: " + PORT);
 });
 
+const URI= "mongodb+srv://user:admin@proyecto.10xow.mongodb.net/eCommerce?retryWrites=true&w=majority"
+
+
+const connectMongoDB = async () => {
+    try {
+        await mongoose.connect(URI)
+        console.log('connected to DB ecommerce')
+    } catch (error) {
+        console.log(error);
+    }
+};
+connectMongoDB()
 
 const socketServer = new Server(httpServer)
 

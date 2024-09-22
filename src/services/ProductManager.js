@@ -1,109 +1,105 @@
-import fs from 'fs/promises'
-import path from 'path'
-
-const productosFilePath = path.resolve('data', 'productos.json')
+import productModel from '../models/product.model.js'
 
 export default class ProductManager {
-    constructor() {
-        this.products = []
-    }
+  
+   async getAllProducts({limit, page, category, stock, sort}) {
+        const filter = {};
+        const config = {lean: true};
+        const result={}
 
-    async init() {
-        try {
-            const data = await fs.readFile(productosFilePath, 'utf-8')
-            this.products = JSON.parse(data)
-        } catch (error) {
-            this.products = []
-        }
-    }
-
+        if(category)filter.category=category;
+        if(stock&&stock==="true")filter.stock={$gt:0};
+        if(stock&&stock==="false")filter.stock={$eq:0};
+        config.limit= !limit||parseInt(limit)<=0 ? 10 : parseInt(limit);
+        config.page = !page||parseInt(page)<=0  ? 1 : parseInt(page);
+        if(sort==="desc")config.sort={ price: -1 };
+        if(sort==="asc")config.sort={ price: 1 };
    
+        try {
+            const response = await productModel.paginate(filter, config)
+      
 
-    saveToFile() {
-        fs.writeFile(productosFilePath, JSON.stringify(this.products, null, 2));
-    }
+            result.status= "Success"
+            result.payload= response.docs
+            result.totalPages= response.totalPages
+            result.prevPage= response.prevPage
+            result.nextPage= response.nextPage
+            result.page=response.page
+            result.hasPrevPage=response.hasPrevPage
+            result.hasNextPage=response.hasNextPage
 
-   async getAllProducts(limit) {
-        await this.init();
+            if (response.hasPrevPage){
+                let prevUrl= `?page=${response.prevPage}`
+                if(config.limit!=10) prevUrl += `&limit=${config.limit}`;
+                if(filter.category) prevUrl +=`&category=${category}`;
+                if(filter.stock) prevUrl +=`&stock=${stock}`;
+                if(config.sort) prevUrl += `&sort=${sort}`;
+                result.prevLink=prevUrl
+            }else{
+                result.prevLink=null
+            }
+           
 
-        if (limit) {
-            return this.products.slice(0, limit)
+            if (response.hasNextPage ){
+                let nextUrl= `?page=${response.nextPage}`
+                if(config.limit!=10) nextUrl += `&limit=${config.limit}`;
+                if(filter.category) nextUrl +=`&category=${category}`;
+                if(filter.stock) nextUrl +=`&stock=${stock}`;
+                if(config.sort) nextUrl += `&sort=${sort}`;
+                result.nextLink=nextUrl
+            }else{
+                result.nextLink=null
+            }
+      
+            return result
+
+        } catch (error) {
+            console.error(error)
         }
-        return this.products
-    }
-
-    verificationProductCode(code){
-        const productIndex = this.products.findIndex(product => product.code === code);
-        if (productIndex === -1) {
-            return null
-        }else{
-            return this.products[productIndex].id
-        }
-        
-
-    }
-
-   async productVerificationById(id){
-       await this.init();
-       console.log(this.products.length)
-        const productIndex = this.products.findIndex(product => product.id === id);
-        if (productIndex === -1) {
-            return true
-        }else{
-            return null
-        }
-    }
-
+}
 
     async getProductById(id) {
-        await this.init();
-
-        return this.products.find(product => product.id === id)
+    
+        try {
+            return await productModel.findById(id).lean();
+        } catch (error) {
+            return null
+        }
+        
     }
 
    async addProduct(product) {
-        await this.init();
-
-        if (this.verificationProductCode(product.code)) return false;
-
-        const newProduct = {
-            id: this.products.length ? this.products[this.products.length - 1].id + 1 : 1,
-            ...product,
-            status: true
-        };
-        this.products.push(newProduct)
-        this.saveToFile()
-        return newProduct;
+    try {
+        await productModel.create(product);
+        return await productModel.findOne({ code: product.code })
+    }
+    catch (error) {
+        console.log(error.message)
+        return error.code
+    }
+     
     }
 
     async updateProduct(id, updatedFields) {
-        await this.init();
 
-        const productIndex = this.products.findIndex(product => product.id === id)
-        if (productIndex === -1) return null;
-
-        const idExistingCode= updatedFields.code? this.verificationProductCode(updatedFields.code):null
-        if (idExistingCode != id && idExistingCode) return 1;
-        
-        
-        const updateProduct = {
-            ...this.products[productIndex],
-            ...updatedFields,
-            id: this.products[productIndex].id 
+        try {
+            const productUpdated= await productModel.findByIdAndUpdate(id, { $set: updatedFields });
+            return await productModel.findOne({ _id: productUpdated._id})
+        } catch (error) {
+            if(error.name&&error.name==="CastError"){
+                return null
+            }
+            return error.code
         }
-        this.products[productIndex] = updateProduct;
-        this.saveToFile();
-        return updateProduct;
+        
+
     }
 
     async deleteProduct(id) {
-        await this.init();
-
-        const productIndex = this.products.findIndex(product => product.id === id)
-        if (productIndex === -1) return null;
-
-        const deletedProduct = this.products.splice(productIndex, 1);
-        this.saveToFile()
-        return deletedProduct[0];
+        try {
+            return await productModel.findByIdAndDelete(id);
+        } catch (error) {
+            return  null
+        }
     }
 }

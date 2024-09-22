@@ -1,0 +1,22 @@
+  <div class='itemContainer'>
+
+            <img class='productImage' src={{response.thumbnail}} >
+            <div class='textItemContainer'>
+                 <div class="divAgregar">
+                 <p>Category > <a href="/home?category={{response.category}}">{{response.category}} </p></a>
+                </div>
+               
+                 <h1>{{response.title}} </h1>
+                <p>{{response.description}} </p>
+                <p class="itemPrice"><b>${{response.price}}</b></p>
+                <div>
+                    <button class='boton_cambio'>-</button>
+                    <span id="counter">0</span>
+                    <button class='boton_cambio'>+</button>
+                </div>
+                <button  class='boton_agregar' >Agregar carrito</button>
+                
+            </div>
+            
+
+    </div>

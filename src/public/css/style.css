@@ -1,18 +1,31 @@
 body{
-    padding: 50px;
-    background-color: #5ecec135;
+  margin: 0;
+    padding:0;
+    background-color: #5ecec10f;
     text-align: center;
+ 
+}
+
+
+nav{
+  background-color: black;
+  width: 100%;
+}
+.logo{
+  width: 250px;
 }
 
 h1{
     font-weight: 1000;
     font-size: 2.5rem;
+    text-align: center;
   }
 .productsContainer{
     display: flex;
     flex-wrap: wrap;
     width: 100%;
     justify-content: center;
+    text-align: center;
 }
 
 .cardProduct{
@@ -23,17 +36,33 @@ h1{
     border: 1px solid #5ecec135;
     border-radius: 15px;
     font-weight: 400;
-    width: 250px;
+    width: 230px;
+    transition: 0.25s;
+    text-decoration: none;
+  color: rgb(4, 4, 4);
+  }
+
+  .cardProduct:hover{
+    
+    transform: scale(1.05);
+    box-shadow: rgba(0, 0, 0, 0.062) 0px 10px 20px, rgba(0, 0, 0, 0.115) 0px 6px 6px;
+  }
+
+  .changePage{
+    text-align: center;
+   width: 100%;
   }
 
   .title{
     color: #5bc7ba;
     font-weight: 800;
     font-size: 1.5rem;
+    margin: 2px;
   }
 
   .price{
     font-weight: 800;
+    margin: 2px;
   }
 
 
@@ -128,3 +157,158 @@ h1{
     display: flex;
     justify-content: center;
   }
+
+  .imgCatalogo{
+    margin-top: 10px;
+    width: 90%;
+    background-color: #fffbfb6d;
+    border-radius: 10px;
+  }
+
+  .button {
+    color: white;
+    font-size: 1rem;
+    font-weight: 800;
+    background-color: rgb(0, 0, 0);
+    border: 1px solid rgba(91, 199, 186, 0.1254901961);
+    border-radius: 10px;
+    padding: 10px;
+    margin: 50px;
+    width: 150px;
+    box-shadow: rgba(0, 0, 0, 0.062) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    cursor: pointer;
+    transition: 0.25s;
+  }
+
+  .button:hover{
+    background-color: rgb(91, 199, 186);
+    box-shadow: rgba(0, 0, 0, 0.062) 0px 10px 20px, rgba(0, 0, 0, 0.115) 0px 6px 6px;
+  }
+
+  .contenedor_productos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  
+  
+  }
+
+  .subcontenedor__carrito{
+    display: flex;
+    flex-wrap: wrap;
+   
+    margin: 10px 80px;
+    padding: 15px;
+    background-color: #5ecec135;
+    border-radius: 10px;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    font-weight: 200;
+  }
+
+  .img_carrito{
+    width: 100px;
+    border-radius: 15px;
+  }
+  
+  .detalles{
+   
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+  }
+
+  .carritoText{
+    margin:0;
+    padding: 0;
+  }
+  
+  
+  .contenedor_carrito{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  
+  }
+  .cambio_cant{
+    display: inline-flex;
+    margin: 20px;
+    align-items: center;
+  
+  }
+
+  .boton_cambio{
+    padding: 2px;
+    background-color: #5bc7babf;
+    border: none;
+    border-radius:5px;
+    font-size: 0.9rem;
+    margin: 0 10px;
+    width: 30px;
+    height: 30px;
+  }
+  
+  .boton_agregar{
+    padding: 2px 6px;
+    background-color: #5bc7babf;
+    border: none;
+    border-radius:15px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin: 30px 0px;
+   
+  }
+
+  
+  
+  
+  
+  .eliminar{
+  margin-left: 40px;
+  margin-bottom: 5px;
+  padding:0 5px;
+  background-color: #3dc0b1e3 ;
+  border: 1px solid #3bbeae90 ;
+  border-radius: 15px;
+  
+  }
+
+
+  .productImage{
+    width: 25rem;
+  }
+  .itemContainer{
+    display: flex;
+    justify-content: center;
+  
+  }
+  
+  .textItemContainer{
+    width: 40%;
+    padding-top: 60px;
+    text-align: center;
+  
+  }
+  .divAgregar {
+    text-align: left;
+    color: #5bc7ba;
+    font-weight: 600;
+  
+  }
+  .divAgregar a{
+    color: #5bc7ba;
+   
+    font-weight: 600;
+  
+  }
+
+  .itemPrice{
+    font-size: 1.5rem;
+  
+  }
+
+  
+
+
+  

@@ -1,0 +1,41 @@
+<div>
+    <h1>Carrito de Compras</h1>
+
+
+    <div>
+        {{#each cart.products}}
+        <div class='contenedor_productos'>
+
+
+
+            
+            <div id="" class='subcontenedor__carrito'>
+                <img src={{this.product.thumbnail}} class='img_carrito' />
+                <div class='detalles'>
+                    <h3 class="carritoText">{{this.product.title}}</h3>
+                    <p class="carritoText">Precio unitario: ${{this.product.price}}</p>
+
+
+                </div>
+                <div class='cambio_cant'>
+                    <button class='boton_cambio'>-</button>
+                    <p>{{this.quantity}}</p>
+                    <button class='boton_cambio'>+</button>
+                </div>
+
+                
+                <button class='eliminar'>eliminar</button>
+
+                
+            </div>
+
+        </div>
+{{/each}}
+        <div class='total'>Total: ${total} </div>
+    </div>
+
+
+
+    <p>Tu carrito está vacío</p>
+
+</div>
